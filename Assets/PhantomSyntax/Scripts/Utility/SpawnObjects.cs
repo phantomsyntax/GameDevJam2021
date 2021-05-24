@@ -30,7 +30,7 @@ namespace PhantomSyntax.Scripts.Utility {
                 // Pull a random object from spawnableObjects and Instantiate it based on the supplied boundary values
                 GameObject randomObject = spawnableObjects[Random.Range(0, spawnableObjects.Count)];
                 float randomSpawnPointX = Random.Range(-spawnBoundary.x, spawnBoundary.x);
-                Instantiate(randomObject, new Vector3(randomSpawnPointX, 0.0f, spawnBoundary.z), randomObject.transform.rotation);
+                Instantiate(randomObject, new Vector3(randomSpawnPointX, randomObject.transform.position.y, spawnBoundary.z), randomObject.transform.rotation);
                 
                 yield return new WaitForSeconds(spawnDelayTimer);
             }
