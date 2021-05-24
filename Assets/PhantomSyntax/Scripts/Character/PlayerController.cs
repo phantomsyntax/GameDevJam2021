@@ -55,7 +55,6 @@ namespace PhantomSyntax.Scripts.Character {
 
         public void HandleOnMove(InputAction.CallbackContext value) {
             m_playerInputVector = value.ReadValue<Vector2>();
-            print(m_playerInputVector.ToString());
 
             // Handle skating forward animation
             if (m_playerInputVector.y > 0.0f && bIsGrounded) {
