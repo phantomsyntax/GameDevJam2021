@@ -55,14 +55,17 @@ namespace PhantomSyntax.Scripts.Character {
 
         public void HandleOnMove(InputAction.CallbackContext value) {
             m_playerInputVector = value.ReadValue<Vector2>();
-            print(m_playerInputVector.ToString());
 
-            // Handle skating forward animation
+            // Handle skating forward and crouching animations
             if (m_playerInputVector.y > 0.0f && bIsGrounded) {
                 playerCharacterAnimator.SetBool("bIsSkatingForward", true);
             }
+            else if (m_playerInputVector.y < 0.0f && bIsGrounded) {
+                playerCharacterAnimator.SetBool("bIsCrouching", true);
+            }
             else {
                 playerCharacterAnimator.SetBool("bIsSkatingForward", false);
+                playerCharacterAnimator.SetBool("bIsCrouching", false);
             }
 
             // Handle side-skating animation
