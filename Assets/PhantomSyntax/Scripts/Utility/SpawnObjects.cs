@@ -9,14 +9,23 @@ namespace PhantomSyntax.Scripts.Utility {
         [SerializeField] private float spawnDelayTimer = 3.0f;
         [SerializeField] private int maximumObjectsOnScreen = 2;
         [SerializeField] private Vector3 spawnBoundary = new Vector3(4.0f, 0.0f, 35.0f);
-        
+
+        [Header("Checkpoint Spawn Settings")]
+        [SerializeField] private GameObject checkpointPrefab;
+        [SerializeField] private float checkpointDelayTimer = 10.0f;
         
         // HandleGameOver   
         private bool bIsGameOver = false;
         
         // Start is called before the first frame update
         void Start() {
-            StartCoroutine(HandleObjectSpawns());
+            if (spawnableObjects.Count > 0) {
+                StartCoroutine(HandleObjectSpawns());   
+            }
+
+            if (checkpointPrefab) {
+                StartCoroutine(HandleCheckpoingSpawns());
+            }
         }
 
         // Update is called once per frame
@@ -33,6 +42,19 @@ namespace PhantomSyntax.Scripts.Utility {
                 Instantiate(randomObject, new Vector3(randomSpawnPointX, randomObject.transform.position.y, spawnBoundary.z), randomObject.transform.rotation);
                 
                 yield return new WaitForSeconds(spawnDelayTimer);
+            }
+        }
+
+        IEnumerator HandleCheckpoingSpawns() {
+            int totalSpawnedCheckpoints = 0;
+            yield return new WaitForSeconds(checkpointDelayTimer);
+            
+            while (!bIsGameOver) {
+                // Spawn a checkpoint based on a selected timer
+                Vector3 checkpointSpawnPosition = new Vector3(checkpointPrefab.transform.position.x, checkpointPrefab.transform.position.y, spawnBoundary.z);
+                Instantiate(checkpointPrefab, checkpointSpawnPosition, checkpointPrefab.transform.rotation);
+                totalSpawnedCheckpoints++; // Adding in for gameloop completion
+                yield return new WaitForSeconds(checkpointDelayTimer);
             }
         }
     }

@@ -69,7 +69,9 @@ sysinfo.txt
 
 # Certificate files
 *.pfx
+*.pfx.meta
 *.cer
+*.cer.meta
 
 
 # Crashlytics generated file
