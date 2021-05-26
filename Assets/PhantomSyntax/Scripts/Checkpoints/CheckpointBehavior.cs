@@ -1,9 +1,15 @@
+using System;
 using UnityEngine;
 
 namespace PhantomSyntax.Scripts.Checkpoints {
     public class CheckpointBehavior : MonoBehaviour {
-        
-        [SerializeField] private float checkpointSpeed = 5.0f;        
+        [Header("Checkpoint Spawn Settings")]
+        [SerializeField] private float checkpointSpeed = 5.0f;
+        private Collider checkpointCollider;
+
+        private void Start() {
+            checkpointCollider = GetComponent<Collider>();
+        }
 
         // Update is called once per frame
         void Update()
@@ -16,6 +22,12 @@ namespace PhantomSyntax.Scripts.Checkpoints {
             float deltaSpeed = (Time.deltaTime * checkpointSpeed);
             // Have to use up vector instead of forward due to object rotation (could be fixed at the object level)
             gameObject.transform.Translate(Vector3.up * deltaSpeed);
+        }
+
+        private void OnTriggerEnter(Collider other) {
+            if (other.CompareTag("Player")) {
+                print(other.transform.name);
+            }
         }
     }
 }
