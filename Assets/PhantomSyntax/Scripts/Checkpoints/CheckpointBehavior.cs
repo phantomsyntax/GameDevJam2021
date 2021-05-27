@@ -1,4 +1,5 @@
 using System;
+using PhantomSyntax.Scripts.Utility;
 using UnityEngine;
 
 namespace PhantomSyntax.Scripts.Checkpoints {
@@ -6,9 +7,14 @@ namespace PhantomSyntax.Scripts.Checkpoints {
         [Header("Checkpoint Spawn Settings")]
         [SerializeField] private float checkpointSpeed = 5.0f;
         private Collider checkpointCollider;
+        private SpawnObjects objectSpawner;
 
         private void Start() {
             checkpointCollider = GetComponent<Collider>();
+            objectSpawner = GameObject.FindWithTag("SpawnManager").GetComponent<SpawnObjects>();
+            if (!objectSpawner) {
+                print("[CheckpointBehavior] - Check SpawnManager object for proper Tag");
+            }
         }
 
         // Update is called once per frame
@@ -27,6 +33,7 @@ namespace PhantomSyntax.Scripts.Checkpoints {
         private void OnTriggerEnter(Collider other) {
             if (other.CompareTag("Player")) {
                 print(other.transform.name);
+                objectSpawner.UpdateCheckpointUI();
             }
         }
     }
