@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using PhantomSyntax.Scripts.Interfaces;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace PhantomSyntax.Scripts.Utility {
     public class SpawnObjects : MonoBehaviour, ICheckpointObserver, ILevelObserver {
@@ -13,11 +15,13 @@ namespace PhantomSyntax.Scripts.Utility {
 
         [Header("Checkpoint Spawn Settings")]
         [SerializeField] private GameObject checkpointPrefab;
-        [SerializeField] private int checkpointsNeededToWin = 3;
+        [SerializeField] private int checkpointsNeededToWin = 0;
         public float checkpointDelayTimer = 10.0f;
 
         [Header("Level Completion Settings")]
         [SerializeField] private GameObject playerFollowPoint;
+        [SerializeField] private List<Image> checkpointIndicators;
+        [SerializeField] private TextMeshProUGUI tokensText;
         
         // ICheckpointObserver
         public int CheckpointsNeeded {
@@ -41,12 +45,14 @@ namespace PhantomSyntax.Scripts.Utility {
             if (!playerFollowPoint) {
                 playerFollowPoint = GameObject.FindWithTag("PlayerFollowPoint");
             }
+            
+            // Null checks for tokensText and checkpointIndicators(?)
         }
 
         // Update is called once per frame
         void Update()
         {
-            if (CheckpointsNeeded < 1 && !bIsGameOver) {
+            if (CheckpointsNeeded > 3 && !bIsGameOver) {
                 StopObjectSpawning();
                 DestroyActiveObjects();
                 UpdateWinLoseUI();
@@ -58,11 +64,13 @@ namespace PhantomSyntax.Scripts.Utility {
         
         public void UpdateCheckpointUI() {
             print("--- Add a flag to the checkpoint UI");
-            CheckpointsNeeded--;
+            CheckpointsNeeded++;
+            if (CheckpointsNeeded <= checkpointIndicators.Count) {
+                checkpointIndicators[CheckpointsNeeded - 1].color = Color.green;
+            }
         }
 
         public void StopObjectSpawning() {
-            print("--- Stop the spawning of objects");
             StopCoroutine(HandleObjectSpawns());
             StopCoroutine(HandleCheckpointSpawns());
             bIsGameOver = true;
@@ -71,16 +79,15 @@ namespace PhantomSyntax.Scripts.Utility {
             print("--- Change Win/Lose UI Text and appearance");
         }
 
-        public void TriggerCameraRotation() {
-            print("--- Rotate the camera around to face the player");
+        public void TriggerCameraRotation() { 
             // Rotate the player's FollowPoint to get the CM to chase it
+            // TODO: slerp the rotation so it slows down
             playerFollowPoint.transform.Rotate(new Vector3(-26.0f, 160.0f, 0.0f));
             float followPointZ = playerFollowPoint.transform.position.z;
             followPointZ = 0.0f;
         }
         
         void DestroyActiveObjects() {
-            print("--- Destroying all active objects");
             var activeObstacles = GameObject.FindGameObjectsWithTag("Obstacle");
             foreach (GameObject obstacle in activeObstacles) {
                 Destroy(obstacle);
