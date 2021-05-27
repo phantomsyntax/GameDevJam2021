@@ -1,4 +1,3 @@
-using System;
 using PhantomSyntax.Scripts.Utility;
 using UnityEngine;
 
@@ -32,7 +31,6 @@ namespace PhantomSyntax.Scripts.Collectables {
         }
 
         private void OnTriggerEnter(Collider other) {
-            print(other.tag);
             if (other.gameObject.CompareTag("Player")) {
                 Instantiate(tokenCollectParticle, transform.position, transform.rotation);
                 objectSpawner.UpdateTokenUI();

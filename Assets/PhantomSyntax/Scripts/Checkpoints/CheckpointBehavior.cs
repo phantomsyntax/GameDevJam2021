@@ -1,4 +1,3 @@
-using System;
 using PhantomSyntax.Scripts.Utility;
 using UnityEngine;
 
@@ -32,7 +31,6 @@ namespace PhantomSyntax.Scripts.Checkpoints {
 
         private void OnTriggerEnter(Collider other) {
             if (other.CompareTag("Player")) {
-                print(other.transform.name);
                 objectSpawner.UpdateCheckpointUI();
             }
         }
