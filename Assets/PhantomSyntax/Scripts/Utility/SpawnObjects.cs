@@ -21,7 +21,10 @@ namespace PhantomSyntax.Scripts.Utility {
         [Header("Level Completion Settings")]
         [SerializeField] private GameObject playerFollowPoint;
         [SerializeField] private List<Image> checkpointIndicators;
+        
+        [Header("Token Collection Settings")]
         [SerializeField] private TextMeshProUGUI tokensText;
+        private int tokenCounter;
         
         // ICheckpointObserver
         public int CheckpointsNeeded {
@@ -63,7 +66,6 @@ namespace PhantomSyntax.Scripts.Utility {
         }
         
         public void UpdateCheckpointUI() {
-            print("--- Add a flag to the checkpoint UI");
             CheckpointsNeeded++;
             if (CheckpointsNeeded <= checkpointIndicators.Count) {
                 checkpointIndicators[CheckpointsNeeded - 1].color = Color.green;
@@ -77,6 +79,11 @@ namespace PhantomSyntax.Scripts.Utility {
         }
         public void UpdateWinLoseUI() {
             print("--- Change Win/Lose UI Text and appearance");
+        }
+
+        public void UpdateTokenUI() {
+            tokenCounter++;
+            tokensText.text = tokenCounter.ToString();
         }
 
         public void TriggerCameraRotation() { 
