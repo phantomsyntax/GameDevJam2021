@@ -1,9 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using PhantomSyntax.Scripts.Interfaces;
-using PhantomSyntax.Scripts.Obstacles;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 namespace PhantomSyntax.Scripts.Utility {
@@ -23,6 +23,7 @@ namespace PhantomSyntax.Scripts.Utility {
         [SerializeField] private GameObject playerFollowPoint;
         [SerializeField] private List<Image> checkpointIndicators;
         [SerializeField] private UserInterfaceManager userInterfaceManager;
+        [SerializeField] private GameObject player;
         public bool bPlayerHasWon = true;
         
         [Header("Token Collection Settings")]
@@ -51,6 +52,10 @@ namespace PhantomSyntax.Scripts.Utility {
             if (!playerFollowPoint) {
                 playerFollowPoint = GameObject.FindWithTag("PlayerFollowPoint");
             }
+
+            if (!player) {
+                player = GameObject.FindWithTag("Player");
+            }
             
             // Null checks for tokensText and checkpointIndicators(?)
         }
@@ -59,12 +64,12 @@ namespace PhantomSyntax.Scripts.Utility {
         void Update()
         {
             // Player gets all checkpoints 
-            if (CheckpointsNeeded > 3 && !bIsGameOver) {
+            if (CheckpointsNeeded == 3 && !bIsGameOver) {
                 HandleGameWinLose(bPlayerHasWon);
                 TriggerCameraRotation();
             }
             // bPlayerHasWon is set by Obstacle collisions
-            if (!bPlayerHasWon) {
+            if (!bPlayerHasWon && !bIsGameOver) {
                 HandleGameWinLose(bPlayerHasWon);
             }
         }
@@ -74,7 +79,11 @@ namespace PhantomSyntax.Scripts.Utility {
                 DestroyActiveObjects();
                 UpdateWinLoseUI();
                 
+                // Switches current InputSystem map to disable player movement
+                player.GetComponent<PlayerInput>().SwitchCurrentActionMap("UI");
+                
                 bIsGameOver = true;
+                CheckpointsNeeded = 0;
         }
         
         public void UpdateCheckpointUI() {
@@ -89,6 +98,7 @@ namespace PhantomSyntax.Scripts.Utility {
             StopCoroutine(HandleCheckpointSpawns());
             bIsGameOver = true;
         }
+        
         public void UpdateWinLoseUI() {
             // Gets moved to GameManager loop?
             userInterfaceManager.ToggleWinLoseText(bPlayerHasWon);
@@ -124,9 +134,9 @@ namespace PhantomSyntax.Scripts.Utility {
                 float randomSpawnPointX = Random.Range(-spawnBoundary.x, spawnBoundary.x);
                 Instantiate(randomObject, new Vector3(randomSpawnPointX, randomObject.transform.position.y, spawnBoundary.z), randomObject.transform.rotation);
                 
-                // Attach this spawn manager component to each obstacle
-                ObstacleBehavior obstacleBehavior = randomObject.GetComponent<ObstacleBehavior>();
-                obstacleBehavior.AttachSpawnManager(this);
+                // // Attach this spawn manager component to each obstacle
+                // ObstacleBehavior obstacleBehavior = randomObject.GetComponent<ObstacleBehavior>();
+                // obstacleBehavior.AttachSpawnManager(this);
                 yield return new WaitForSeconds(spawnDelayTimer);
             }
         }
@@ -143,6 +153,5 @@ namespace PhantomSyntax.Scripts.Utility {
                 yield return new WaitForSeconds(checkpointDelayTimer);
             }
         }
-
     }
 }

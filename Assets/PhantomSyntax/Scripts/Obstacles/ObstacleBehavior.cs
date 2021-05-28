@@ -1,4 +1,3 @@
-using System;
 using PhantomSyntax.Scripts.Utility;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -17,6 +16,7 @@ namespace PhantomSyntax.Scripts.Obstacles {
         // Start is called before the first frame update
         void Start() {
             objectSpeed = Random.Range(objectSpeedMin, objectSpeedMax);
+            AttachSpawnManager();
         }
 
         // Update is called once per frame
@@ -31,14 +31,13 @@ namespace PhantomSyntax.Scripts.Obstacles {
             gameObject.transform.Translate(Vector3.forward * deltaSpeed);
         }
 
-        public void AttachSpawnManager(SpawnObjects spawnObjects) {
-            _spawnObjects = spawnObjects;
+        public void AttachSpawnManager() {
+            GameObject spawnManager = GameObject.Find("SpawnManager");
+            _spawnObjects = spawnManager.GetComponent<SpawnObjects>();
         }
 
         private void OnTriggerEnter(Collider other) {
-            print(other.ToString());
             if (other.gameObject.CompareTag("Player")) {
-                print(other.gameObject.tag);
                 _spawnObjects.bPlayerHasWon = false;
             }
         }

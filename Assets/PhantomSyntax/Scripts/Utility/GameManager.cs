@@ -10,8 +10,6 @@ namespace PhantomSyntax.Scripts.Utility {
         void Start()
         {
             // Null checks for the managers
-            
-            
         }
 
         // Update is called once per frame

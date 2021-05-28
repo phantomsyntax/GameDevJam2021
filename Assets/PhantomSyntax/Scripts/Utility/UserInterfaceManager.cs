@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace PhantomSyntax.Scripts.Utility {
     public class UserInterfaceManager : MonoBehaviour {
@@ -8,19 +9,12 @@ namespace PhantomSyntax.Scripts.Utility {
         [SerializeField] private TextMeshProUGUI winLoseText;
         private bool bPlayerHasWon;
         
-        
         // Start is called before the first frame update
         void Start()
         {
             // Null check for winLoseText;
             winLose.enabled = false;
             winLoseText.text = "";
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-        
         }
     
         public void ToggleWinLoseText(bool bPlayerHasWon) {
@@ -35,11 +29,11 @@ namespace PhantomSyntax.Scripts.Utility {
         }
 
         public void HandleRetryButtonClick() {
-            print("--- Reload the scene");
+            SceneManager.LoadScene(1);
         }
 
         public void HandleQuitButtonClick() {
-            print("--- Go back to the Main Menu");
+            SceneManager.LoadScene(0);
         }
     }
 }

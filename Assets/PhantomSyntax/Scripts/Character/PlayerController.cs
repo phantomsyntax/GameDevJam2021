@@ -1,14 +1,15 @@
-using System;
+using PhantomSyntax.Scripts.Utility;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace PhantomSyntax.Scripts.Character {
     public class PlayerController : MonoBehaviour {
-        [Header("World Settings")] [SerializeField]
-        private float gravityValue = -9.81f;
+        [Header("World Settings")]
+        [SerializeField] private float gravityValue = -9.81f;
 
-        [Header("Player Movement Settings")] [SerializeField]
-        private CharacterController playerCharacterController;
+        [Header("Player Movement Settings")]
+        [SerializeField] private CharacterController playerCharacterController;
+        private SpawnObjects spawnObjects;
 
         [SerializeField] private float playerMovementSpeed = 5.0f;
         [SerializeField] private float playerJumpHeight = 1.0f;
@@ -27,10 +28,6 @@ namespace PhantomSyntax.Scripts.Character {
             if (!playerCharacterAnimator) {
                 playerCharacterAnimator = GetComponent<Animator>();
             }
-        }
-
-        // Start is called before the first frame update
-        void Start() {
         }
 
         // Update is called once per frame
@@ -86,9 +83,6 @@ namespace PhantomSyntax.Scripts.Character {
             if (value.canceled) {
                 playerCharacterAnimator.SetBool("bIsJumping", false);
             }
-        }
-
-        private void OnTriggerEnter(Collider other) {
         }
     }
 }
