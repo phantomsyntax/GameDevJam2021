@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8135038849911933527}
   - component: {fileID: 8093975575338030725}
   - component: {fileID: 2853760420079825673}
+  - component: {fileID: -7863499870130759092}
   m_Layer: 0
   m_Name: SM_Prop_Cone_01
   m_TagString: Obstacle
@@ -111,3 +112,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectSpeedMin: 2.5
   objectSpeedMax: 6
+--- !u!65 &-7863499870130759092
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8121132471480781335}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.4531855, y: 0.82496846, z: 0.45319125}
+  m_Center: {x: -0.00000987947, y: 0.41248423, z: 0.00000081956387}

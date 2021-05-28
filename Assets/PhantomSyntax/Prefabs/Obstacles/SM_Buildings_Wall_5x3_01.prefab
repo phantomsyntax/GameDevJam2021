@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1944989579462033818}
   - component: {fileID: 1944989579463000922}
   - component: {fileID: -5640842542183350192}
+  - component: {fileID: 5459547495667517671}
   m_Layer: 0
   m_Name: SM_Buildings_Wall_5x3_01
   m_TagString: Obstacle
@@ -97,6 +98,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectSpeedMin: 2.5
   objectSpeedMax: 6
+--- !u!65 &5459547495667517671
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1944989579460746650}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 4.9999995, y: 3, z: 0.099999994}
+  m_Center: {x: 2.4999998, y: 1.5, z: 0.049999997}
 --- !u!1001 &6829006468422665370
 PrefabInstance:
   m_ObjectHideFlags: 0

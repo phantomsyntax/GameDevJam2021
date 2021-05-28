@@ -1,4 +1,7 @@
+using System;
+using PhantomSyntax.Scripts.Utility;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace PhantomSyntax.Scripts.Obstacles {
     public class ObstacleBehavior : MonoBehaviour
@@ -7,6 +10,9 @@ namespace PhantomSyntax.Scripts.Obstacles {
         [SerializeField] private float objectSpeedMin = 2.5f;
         [SerializeField] private float objectSpeedMax = 6.0f;
         private float objectSpeed;
+
+        [Header("Spawn Manager Attachment")]
+        [SerializeReference] private SpawnObjects _spawnObjects;
         
         // Start is called before the first frame update
         void Start() {
@@ -23,6 +29,18 @@ namespace PhantomSyntax.Scripts.Obstacles {
 
             float deltaSpeed = (Time.deltaTime * objectSpeed);
             gameObject.transform.Translate(Vector3.forward * deltaSpeed);
+        }
+
+        public void AttachSpawnManager(SpawnObjects spawnObjects) {
+            _spawnObjects = spawnObjects;
+        }
+
+        private void OnTriggerEnter(Collider other) {
+            print(other.ToString());
+            if (other.gameObject.CompareTag("Player")) {
+                print(other.gameObject.tag);
+                _spawnObjects.bPlayerHasWon = false;
+            }
         }
     }
 }

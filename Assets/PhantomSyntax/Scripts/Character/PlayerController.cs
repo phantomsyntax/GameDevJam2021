@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -85,6 +86,9 @@ namespace PhantomSyntax.Scripts.Character {
             if (value.canceled) {
                 playerCharacterAnimator.SetBool("bIsJumping", false);
             }
+        }
+
+        private void OnTriggerEnter(Collider other) {
         }
     }
 }

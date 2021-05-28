@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 633079531}
   m_Layer: 0
   m_Name: FollowPoint
-  m_TagString: Untagged
+  m_TagString: PlayerFollowPoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 6018096155966813190}
   - component: {fileID: 5239815922853799522}
   - component: {fileID: 5945761937807012601}
-  - component: {fileID: 1182848586074174140}
+  - component: {fileID: 8305208804624523853}
   m_Layer: 0
   m_Name: Pearl
   m_TagString: Player
@@ -82,7 +82,7 @@ MonoBehaviour:
   playerCharacterController: {fileID: 5945761937807012601}
   playerMovementSpeed: 5
   playerJumpHeight: 1
-  playerCharacterAnimator: {fileID: 1182848586074174140}
+  playerCharacterAnimator: {fileID: 4735537135029612898}
 --- !u!114 &5239815922853799522
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -213,25 +213,19 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0
   m_Center: {x: 0, y: 0.8, z: 0}
---- !u!95 &1182848586074174140
-Animator:
-  serializedVersion: 3
+--- !u!65 &8305208804624523853
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1212194280586769055}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 22f249c85ae6aab40a3b43049f2c3852, type: 3}
-  m_Controller: {fileID: 9100000, guid: 15f84dd28d7de1746935ed2f1dc6a615, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Size: {x: 0.6, y: 1.65, z: 0.5}
+  m_Center: {x: 0, y: 0.75, z: 0}
 --- !u!1001 &1373489283
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -377,6 +371,11 @@ PrefabInstance:
 --- !u!4 &1682144195325831960 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 22f249c85ae6aab40a3b43049f2c3852, type: 3}
+  m_PrefabInstance: {fileID: 1212194281471397107}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &4735537135029612898 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 22f249c85ae6aab40a3b43049f2c3852, type: 3}
   m_PrefabInstance: {fileID: 1212194281471397107}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &145249610519797643 stripped
