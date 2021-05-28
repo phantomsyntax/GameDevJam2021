@@ -13,8 +13,10 @@ namespace PhantomSyntax.Scripts.Character {
 
         [SerializeField] private float playerMovementSpeed = 5.0f;
         [SerializeField] private float playerJumpHeight = 1.0f;
+        private Vector3 playerColliderCenter;
         private Vector3 m_playerVelocity;
         private Vector2 m_playerInputVector;
+        private float playerColliderHeight;
         private bool bIsGrounded;
 
         [Header("Player Animation Settings")] [SerializeField]
@@ -28,6 +30,11 @@ namespace PhantomSyntax.Scripts.Character {
             if (!playerCharacterAnimator) {
                 playerCharacterAnimator = GetComponent<Animator>();
             }
+
+            // Cache the collider sizes for crouching
+            playerColliderHeight = playerCharacterController.height;
+            playerColliderCenter = playerCharacterController.center;
+
         }
 
         // Update is called once per frame
@@ -59,10 +66,16 @@ namespace PhantomSyntax.Scripts.Character {
             }
             else if (m_playerInputVector.y < 0.0f && bIsGrounded) {
                 playerCharacterAnimator.SetBool("bIsCrouching", true);
+                
+                // Adjust the Collider size for crouching
+                playerCharacterController.height = playerColliderHeight * 0.5f;
+                playerCharacterController.center = playerColliderCenter * 0.5f;
             }
-            else {
+            else if (m_playerInputVector.x == 0.0f && m_playerInputVector.y == 0.0f) {
                 playerCharacterAnimator.SetBool("bIsSkatingForward", false);
                 playerCharacterAnimator.SetBool("bIsCrouching", false);
+                playerCharacterController.height = playerColliderHeight;
+                playerCharacterController.center = playerColliderCenter;
             }
 
             // Handle side-skating animation
