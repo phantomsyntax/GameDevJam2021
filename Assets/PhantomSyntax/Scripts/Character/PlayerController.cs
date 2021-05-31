@@ -14,19 +14,19 @@ namespace PhantomSyntax.Scripts.Character {
         [SerializeField] private float playerMovementSpeed = 5.0f;
         [SerializeField] private float playerJumpHeight = 1.0f;
         private Vector3 playerColliderCenter;
-        private Vector3 m_playerVelocity;
-        private Vector2 m_playerInputVector;
+        private Vector3 playerVelocity;
+        private Vector2 playerInputVector;
         private float playerColliderHeight;
         private bool bIsGrounded;
 
-        [Header("Player Animation Settings")] [SerializeField]
-        private Animator playerCharacterAnimator;
+        [Header("Player Animation Settings")]
+        [SerializeField] private Animator playerCharacterAnimator;
 
         private void Awake() {
+            // Null checks
             if (!playerCharacterController) {
                 playerCharacterController = GetComponent<CharacterController>();
             }
-
             if (!playerCharacterAnimator) {
                 playerCharacterAnimator = GetComponent<Animator>();
             }
@@ -41,37 +41,37 @@ namespace PhantomSyntax.Scripts.Character {
         void Update() {
             bIsGrounded = playerCharacterController.isGrounded;
             // Avoid negative velocity.y values
-            if (bIsGrounded && m_playerVelocity.y < 0.0f) {
-                m_playerVelocity.y = 0.0f;
+            if (bIsGrounded && playerVelocity.y < 0.0f) {
+                playerVelocity.y = 0.0f;
             }
 
             // Grab input vector from HandleOnMove() and apply it times player speed
             if (bIsGrounded) {
-                Vector3 movementVector = new Vector3(m_playerInputVector.x, 0.0f, 0.0f);
+                Vector3 movementVector = new Vector3(playerInputVector.x, 0.0f, 0.0f);
                 float deltaSpeed = playerMovementSpeed * Time.deltaTime;
                 playerCharacterController.Move(movementVector * deltaSpeed);
             }
 
             // Grab velocity from HandleOnJump() and trigger jump logic            
-            m_playerVelocity.y += gravityValue * Time.deltaTime;
-            playerCharacterController.Move(m_playerVelocity * Time.deltaTime);
+            playerVelocity.y += gravityValue * Time.deltaTime;
+            playerCharacterController.Move(playerVelocity * Time.deltaTime);
         }
 
         public void HandleOnMove(InputAction.CallbackContext value) {
-            m_playerInputVector = value.ReadValue<Vector2>();
+            playerInputVector = value.ReadValue<Vector2>();
 
             // Handle skating forward and crouching animations
-            if (m_playerInputVector.y > 0.0f && bIsGrounded) {
+            if (playerInputVector.y > 0.0f && bIsGrounded) {
                 playerCharacterAnimator.SetBool("bIsSkatingForward", true);
             }
-            else if (m_playerInputVector.y < 0.0f && bIsGrounded) {
+            else if (playerInputVector.y < 0.0f && bIsGrounded) {
                 playerCharacterAnimator.SetBool("bIsCrouching", true);
                 
                 // Adjust the Collider size for crouching
                 playerCharacterController.height = playerColliderHeight * 0.5f;
                 playerCharacterController.center = playerColliderCenter * 0.5f;
             }
-            else if (m_playerInputVector.x == 0.0f && m_playerInputVector.y == 0.0f) {
+            else if (playerInputVector.x == 0.0f && playerInputVector.y == 0.0f) {
                 playerCharacterAnimator.SetBool("bIsSkatingForward", false);
                 playerCharacterAnimator.SetBool("bIsCrouching", false);
                 playerCharacterController.height = playerColliderHeight;
@@ -79,7 +79,7 @@ namespace PhantomSyntax.Scripts.Character {
             }
 
             // Handle side-skating animation
-            if (m_playerInputVector.x != 0.0f && bIsGrounded) {
+            if (playerInputVector.x != 0.0f && bIsGrounded) {
                 playerCharacterAnimator.SetBool("bIsFreeSkating", true);
             }
             else {
@@ -90,7 +90,7 @@ namespace PhantomSyntax.Scripts.Character {
         public void HandleOnJump(InputAction.CallbackContext value) {
             if (value.started && bIsGrounded) {
                 playerCharacterAnimator.SetBool("bIsJumping", true);
-                m_playerVelocity.y += Mathf.Sqrt(playerJumpHeight * -3.0f * gravityValue);
+                playerVelocity.y += Mathf.Sqrt(playerJumpHeight * -3.0f * gravityValue);
             }
 
             if (value.canceled) {

@@ -37,7 +37,6 @@ namespace PhantomSyntax.Scripts.Obstacles {
         }
 
         private void OnTriggerEnter(Collider other) {
-            print($"--- {other}");
             if (other.gameObject.CompareTag("Player")) {
                 _spawnObjects.bPlayerHasWon = false;
             }

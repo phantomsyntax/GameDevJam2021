@@ -1,4 +1,4 @@
-using PhantomSyntax.Scripts.Utility;
+using PhantomSyntax.Scripts.ScriptableObjects;
 using UnityEngine;
 
 namespace PhantomSyntax.Scripts.Collectables {
@@ -6,7 +6,8 @@ namespace PhantomSyntax.Scripts.Collectables {
         [Header("Token Collection Settings")]
         [SerializeField] private Collider tokenCollider;
         [SerializeField] private ParticleSystem tokenCollectParticle;
-        private SpawnObjects objectSpawner;
+        [SerializeField] private GameEvent tokenCollectedEvent;
+        [SerializeField] private IntegerValue tokensCollected;
         
         // Start is called before the first frame update
         void Start()
@@ -14,12 +15,6 @@ namespace PhantomSyntax.Scripts.Collectables {
             if (!tokenCollider) {
                 gameObject.GetComponent<Collider>();
             }
-            
-            objectSpawner = GameObject.FindWithTag("SpawnManager").GetComponent<SpawnObjects>();
-            if (!objectSpawner) {
-                print("[CheckpointBehavior] - Check SpawnManager object for proper Tag");
-            }
-            
             // Null check for particle
         }
 
@@ -33,10 +28,15 @@ namespace PhantomSyntax.Scripts.Collectables {
         private void OnTriggerEnter(Collider other) {
             if (other.gameObject.CompareTag("Player")) {
                 Instantiate(tokenCollectParticle, transform.position, transform.rotation);
-                objectSpawner.UpdateTokenUI();
+
+                ++tokensCollected.Value;
+                // Trigger GameEvent to update UI text
+                tokenCollectedEvent.Triggered();
+                
                 gameObject.SetActive(false);
                 Destroy(gameObject, 1.0f);
             }
+
         }
     }
 }

@@ -26,10 +26,6 @@ namespace PhantomSyntax.Scripts.Utility {
         [SerializeField] private GameObject player;
         public bool bPlayerHasWon = true;
         
-        [Header("Token Collection Settings")]
-        [SerializeField] private TextMeshProUGUI tokensText;
-        private int tokenCounter;
-        
         // ICheckpointObserver
         public int CheckpointsNeeded {
             get => checkpointsNeededToWin;
@@ -102,11 +98,6 @@ namespace PhantomSyntax.Scripts.Utility {
         public void UpdateWinLoseUI() {
             // Gets moved to GameManager loop?
             userInterfaceManager.ToggleWinLoseText(bPlayerHasWon);
-        }
-
-        public void UpdateTokenUI() {
-            tokenCounter++;
-            tokensText.text = tokenCounter.ToString();
         }
 
         public void TriggerCameraRotation() { 
