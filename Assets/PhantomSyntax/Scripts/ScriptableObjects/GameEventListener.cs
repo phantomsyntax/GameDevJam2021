@@ -6,6 +6,7 @@ namespace PhantomSyntax.Scripts.ScriptableObjects {
         [Header("GameEvent Observer Settings")]
         [SerializeField] private GameEvent gameEvent;
         [SerializeField] private UnityEvent unityEvent;
+        [SerializeField] private UnityEvent<bool> boolEvent;
         
         private void OnEnable() {
             if (gameEvent != null) {
@@ -15,6 +16,10 @@ namespace PhantomSyntax.Scripts.ScriptableObjects {
 
         public void EventTriggered() {
             unityEvent.Invoke();
+        }
+
+        public void EventBool(bool value) {
+            boolEvent.Invoke(value);
         }
         
         private void OnDisable() {

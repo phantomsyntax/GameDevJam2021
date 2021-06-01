@@ -1,4 +1,3 @@
-using PhantomSyntax.Scripts.Utility;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -9,8 +8,6 @@ namespace PhantomSyntax.Scripts.Character {
 
         [Header("Player Movement Settings")]
         [SerializeField] private CharacterController playerCharacterController;
-        private SpawnObjects spawnObjects;
-
         [SerializeField] private float playerMovementSpeed = 5.0f;
         [SerializeField] private float playerJumpHeight = 1.0f;
         private Vector3 playerColliderCenter;
@@ -21,6 +18,9 @@ namespace PhantomSyntax.Scripts.Character {
 
         [Header("Player Animation Settings")]
         [SerializeField] private Animator playerCharacterAnimator;
+
+        [Header("Event Settings")]
+        [SerializeField] private GameObject playerFollowPoint;
 
         private void Awake() {
             // Null checks
@@ -55,6 +55,19 @@ namespace PhantomSyntax.Scripts.Character {
             // Grab velocity from HandleOnJump() and trigger jump logic            
             playerVelocity.y += gravityValue * Time.deltaTime;
             playerCharacterController.Move(playerVelocity * Time.deltaTime);
+        }
+
+        public void ChangeInputMap() {
+            // Switches current InputSystem map to disable player movement
+            GetComponent<PlayerInput>().SwitchCurrentActionMap("UI");
+        }
+        
+        public void TriggerCameraRotation(bool value) { 
+            // Rotate the player's FollowPoint to get the CM to chase it
+            // TODO: slerp the rotation so it slows down
+            if (value) {
+                playerFollowPoint.transform.Rotate(new Vector3(-26.0f, 160.0f, 0.0f));
+            }
         }
 
         public void HandleOnMove(InputAction.CallbackContext value) {

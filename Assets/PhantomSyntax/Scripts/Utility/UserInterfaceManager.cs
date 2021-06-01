@@ -7,7 +7,6 @@ namespace PhantomSyntax.Scripts.Utility {
         [Header("User Interface Settings")]
         [SerializeField] private Canvas winLose;
         [SerializeField] private TextMeshProUGUI winLoseText;
-        private bool bPlayerHasWon;
         
         // Start is called before the first frame update
         void Start()

@@ -1,7 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem.Interactions;
-using UnityEngine.PlayerLoop;
 
 namespace PhantomSyntax.Scripts.ScriptableObjects {
     [CreateAssetMenu]
@@ -11,6 +9,12 @@ namespace PhantomSyntax.Scripts.ScriptableObjects {
         public void Triggered() {
             foreach (GameEventListener gameEventListener in listeners) {
                 gameEventListener.EventTriggered();
+            }
+        }
+
+        public void ConditionalBool(bool value) {
+            foreach (GameEventListener gameEventListener in listeners) {
+                gameEventListener.EventBool(value);
             }
         }
 
