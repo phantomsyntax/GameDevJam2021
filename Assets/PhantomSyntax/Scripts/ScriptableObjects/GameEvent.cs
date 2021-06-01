@@ -9,7 +9,6 @@ namespace PhantomSyntax.Scripts.ScriptableObjects {
         private List<GameEventListener> listeners = new List<GameEventListener>();
 
         public void Triggered() {
-            Debug.Log(listeners.Count.ToString());
             foreach (GameEventListener gameEventListener in listeners) {
                 gameEventListener.EventTriggered();
             }

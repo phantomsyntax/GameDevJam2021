@@ -124,10 +124,7 @@ namespace PhantomSyntax.Scripts.Utility {
                 GameObject randomObject = spawnableObjects[Random.Range(0, spawnableObjects.Count)];
                 float randomSpawnPointX = Random.Range(-spawnBoundary.x, spawnBoundary.x);
                 Instantiate(randomObject, new Vector3(randomSpawnPointX, randomObject.transform.position.y, spawnBoundary.z), randomObject.transform.rotation);
-                
-                // // Attach this spawn manager component to each obstacle
-                // ObstacleBehavior obstacleBehavior = randomObject.GetComponent<ObstacleBehavior>();
-                // obstacleBehavior.AttachSpawnManager(this);
+
                 yield return new WaitForSeconds(spawnDelayTimer);
             }
         }
