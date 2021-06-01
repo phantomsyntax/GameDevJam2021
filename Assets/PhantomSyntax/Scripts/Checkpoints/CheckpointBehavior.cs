@@ -1,4 +1,4 @@
-using PhantomSyntax.Scripts.Utility;
+using PhantomSyntax.Scripts.ScriptableObjects;
 using UnityEngine;
 
 namespace PhantomSyntax.Scripts.Checkpoints {
@@ -6,13 +6,15 @@ namespace PhantomSyntax.Scripts.Checkpoints {
         [Header("Checkpoint Spawn Settings")]
         [SerializeField] private float checkpointSpeed = 5.0f;
         private Collider checkpointCollider;
-        private SpawnObjects objectSpawner;
+        // private SpawnObjects objectSpawner;
+
+        [Header("Checkpoint Passed Settings")]
+        [SerializeField] private GameEvent checkpointWasPassed;
+        [SerializeField] private IntegerValue checkpointsPassed;
 
         private void Start() {
-            checkpointCollider = GetComponent<Collider>();
-            objectSpawner = GameObject.FindWithTag("SpawnManager").GetComponent<SpawnObjects>();
-            if (!objectSpawner) {
-                print("[CheckpointBehavior] - Check SpawnManager object for proper Tag");
+            if (!checkpointCollider) {
+                checkpointCollider = GetComponent<Collider>();
             }
         }
 
@@ -31,7 +33,8 @@ namespace PhantomSyntax.Scripts.Checkpoints {
 
         private void OnTriggerEnter(Collider other) {
             if (other.CompareTag("Player")) {
-                objectSpawner.UpdateCheckpointUI();
+                ++checkpointsPassed.Value;
+                checkpointWasPassed.Triggered();
             }
         }
     }

@@ -1,13 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using PhantomSyntax.Scripts.Interfaces;
+using PhantomSyntax.Scripts.ScriptableObjects;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 namespace PhantomSyntax.Scripts.Utility {
-    public class SpawnObjects : MonoBehaviour, ICheckpointObserver, ILevelObserver {
+    public class SpawnObjects : MonoBehaviour, /*ICheckpointObserver,*/ ILevelObserver {
         [Header("Object Spawn Settings")]
         [SerializeField] private List<GameObject> spawnableObjects;
         [SerializeField] private float spawnDelayTimer = 3.0f;
@@ -16,21 +17,15 @@ namespace PhantomSyntax.Scripts.Utility {
 
         [Header("Checkpoint Spawn Settings")]
         [SerializeField] private GameObject checkpointPrefab;
-        [SerializeField] private int checkpointsNeededToWin = 0;
+        [SerializeField] private int checkpointsNeededToWin = 3;
+        [SerializeField] private IntegerValue checkpointsPassed;
         public float checkpointDelayTimer = 10.0f;
 
         [Header("Level Completion Settings")]
         [SerializeField] private GameObject playerFollowPoint;
-        [SerializeField] private List<Image> checkpointIndicators;
         [SerializeField] private UserInterfaceManager userInterfaceManager;
         [SerializeField] private GameObject player;
         public bool bPlayerHasWon = true;
-        
-        // ICheckpointObserver
-        public int CheckpointsNeeded {
-            get => checkpointsNeededToWin;
-            set => checkpointsNeededToWin = value;
-        }
         
         // HandleGameOver   
         private bool bIsGameOver = false;
@@ -60,7 +55,7 @@ namespace PhantomSyntax.Scripts.Utility {
         void Update()
         {
             // Player gets all checkpoints 
-            if (CheckpointsNeeded == 3 && !bIsGameOver) {
+            if (checkpointsPassed.Value == checkpointsNeededToWin && !bIsGameOver) {
                 HandleGameWinLose(bPlayerHasWon);
                 TriggerCameraRotation();
             }
@@ -79,16 +74,9 @@ namespace PhantomSyntax.Scripts.Utility {
                 player.GetComponent<PlayerInput>().SwitchCurrentActionMap("UI");
                 
                 bIsGameOver = true;
-                CheckpointsNeeded = 0;
+                checkpointsPassed.Value = 0;
         }
         
-        public void UpdateCheckpointUI() {
-            CheckpointsNeeded++;
-            if (CheckpointsNeeded <= checkpointIndicators.Count) {
-                checkpointIndicators[CheckpointsNeeded - 1].color = Color.green;
-            }
-        }
-
         public void StopObjectSpawning() {
             StopCoroutine(HandleObjectSpawns());
             StopCoroutine(HandleCheckpointSpawns());

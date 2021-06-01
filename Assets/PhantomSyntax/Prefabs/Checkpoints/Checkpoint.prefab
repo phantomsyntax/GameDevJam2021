@@ -267,6 +267,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   checkpointSpeed: 5
+  checkpointWasPassed: {fileID: 11400000, guid: 2fb2386ef877fb345bed689d2266f2d9, type: 2}
+  checkpointsPassed: {fileID: 11400000, guid: c4f2eba2c532c3847830957f68bacf95, type: 2}
 --- !u!65 &1465540534
 BoxCollider:
   m_ObjectHideFlags: 0

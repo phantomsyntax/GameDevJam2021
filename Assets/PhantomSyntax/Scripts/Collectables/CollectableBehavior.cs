@@ -36,7 +36,6 @@ namespace PhantomSyntax.Scripts.Collectables {
                 gameObject.SetActive(false);
                 Destroy(gameObject, 1.0f);
             }
-
         }
     }
 }
