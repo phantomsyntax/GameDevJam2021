@@ -21,6 +21,7 @@ namespace PhantomSyntax.Scripts.Character {
 
         [Header("Event Settings")]
         [SerializeField] private GameObject playerFollowPoint;
+        private float playerFollowPointHeight;
 
         private void Awake() {
             // Null checks
@@ -34,7 +35,7 @@ namespace PhantomSyntax.Scripts.Character {
             // Cache the collider sizes for crouching
             playerColliderHeight = playerCharacterController.height;
             playerColliderCenter = playerCharacterController.center;
-
+            playerFollowPointHeight = playerFollowPoint.transform.position.y;
         }
 
         // Update is called once per frame
@@ -83,12 +84,21 @@ namespace PhantomSyntax.Scripts.Character {
                 // Adjust the Collider size for crouching
                 playerCharacterController.height = playerColliderHeight * 0.5f;
                 playerCharacterController.center = playerColliderCenter * 0.5f;
+                
+                // Adjust the FollowPoint for camera follow while crouching
+                var position = playerFollowPoint.transform.position;
+                position = new Vector3(position.x, playerFollowPointHeight * 0.5f, position.z);
+                playerFollowPoint.transform.position = position;
             }
             else if (playerInputVector.x == 0.0f && playerInputVector.y == 0.0f) {
                 playerCharacterAnimator.SetBool("bIsSkatingForward", false);
                 playerCharacterAnimator.SetBool("bIsCrouching", false);
                 playerCharacterController.height = playerColliderHeight;
                 playerCharacterController.center = playerColliderCenter;
+                
+                var position = playerFollowPoint.transform.position;
+                position = new Vector3(position.x, playerFollowPointHeight, position.z);
+                playerFollowPoint.transform.position = position;
             }
 
             // Handle side-skating animation
