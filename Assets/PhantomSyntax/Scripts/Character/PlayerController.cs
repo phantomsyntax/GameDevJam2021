@@ -121,7 +121,7 @@ namespace PhantomSyntax.Scripts.Character {
 
         public void HandleOnJump(InputAction.CallbackContext value) {
             if (value.started && bIsGrounded) {
-                playerCharacterAnimator.SetBool("bIsJumping", true);
+                playerCharacterAnimator.SetTrigger("Jumping");
                 playerVelocity.y += Mathf.Sqrt(playerJumpHeight * -3.0f * gravityValue);
             }
 
