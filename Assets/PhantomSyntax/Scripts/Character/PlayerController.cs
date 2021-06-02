@@ -71,6 +71,12 @@ namespace PhantomSyntax.Scripts.Character {
             }
         }
 
+        public void TriggerCheeringAnimation(bool value) {
+            if (value) {
+                playerCharacterAnimator.SetTrigger("Cheering");
+            }
+        }
+
         public void HandleOnMove(InputAction.CallbackContext value) {
             playerInputVector = value.ReadValue<Vector2>();
 
@@ -93,9 +99,12 @@ namespace PhantomSyntax.Scripts.Character {
             else if (playerInputVector.x == 0.0f && playerInputVector.y == 0.0f) {
                 playerCharacterAnimator.SetBool("bIsSkatingForward", false);
                 playerCharacterAnimator.SetBool("bIsCrouching", false);
+                
+                // Reset collider back to original
                 playerCharacterController.height = playerColliderHeight;
                 playerCharacterController.center = playerColliderCenter;
                 
+                // Reset FollowPoint height to original
                 var position = playerFollowPoint.transform.position;
                 position = new Vector3(position.x, playerFollowPointHeight, position.z);
                 playerFollowPoint.transform.position = position;
