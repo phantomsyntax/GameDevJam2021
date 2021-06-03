@@ -38,7 +38,7 @@ namespace PhantomSyntax.Scripts.Checkpoints {
         }
 
         public void TriggerAudioClip() {
-            checkpointAudioSource.PlayOneShot(checkpointPassedAudioClip, 1.0f);
+            checkpointAudioSource.PlayOneShot(checkpointPassedAudioClip, 0.8f);
         }
     }
 }

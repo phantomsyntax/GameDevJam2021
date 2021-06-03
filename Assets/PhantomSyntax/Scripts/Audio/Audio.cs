@@ -59,8 +59,13 @@ namespace PhantomSyntax.Scripts.Audio {
         }
 
         private IEnumerator HandleLoseMusicTransition() {
-            print("--- There is no Lose music yet");
-            yield break;
+            // Trigger Audio Animator fade
+            audioSourceAnimator.SetTrigger("FadeOutAudio");
+            yield return new WaitForSeconds(1.0f);
+            // Trigger new audio clip and play
+            audioSource.clip = audioClips[2];
+            audioSource.volume = audioClipVolume;
+            audioSource.Play();
         }
     }
 }

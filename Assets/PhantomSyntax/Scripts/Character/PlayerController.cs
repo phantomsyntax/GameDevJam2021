@@ -79,6 +79,12 @@ namespace PhantomSyntax.Scripts.Character {
             }
         }
 
+        public void TriggerCryingAnimation(bool value) {
+            if (!value) {
+                playerCharacterAnimator.SetTrigger("Crying");
+            }
+        }
+
         public void HandleOnMove(InputAction.CallbackContext value) {
             playerInputVector = value.ReadValue<Vector2>();
 
