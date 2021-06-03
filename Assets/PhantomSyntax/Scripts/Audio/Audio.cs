@@ -9,6 +9,7 @@ namespace PhantomSyntax.Scripts.Audio {
         [Header("Audio Clip Settings")]
         [SerializeField] private AudioSource audioSource;
         [SerializeField] private AudioClip[] audioClips;
+        
         private float audioClipVolume = 1.0f;
 
         [Header("Level Complete Settings")]

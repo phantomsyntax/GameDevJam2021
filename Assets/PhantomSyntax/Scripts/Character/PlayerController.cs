@@ -24,6 +24,8 @@ namespace PhantomSyntax.Scripts.Character {
         private float playerFollowPointHeight;
 
         private void Awake() {
+            GetComponent<PlayerInput>().SwitchCurrentActionMap("Player");
+            
             // Null checks
             if (!playerCharacterController) {
                 playerCharacterController = GetComponent<CharacterController>();

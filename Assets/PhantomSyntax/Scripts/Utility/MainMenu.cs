@@ -10,16 +10,21 @@ namespace PhantomSyntax.Scripts.Utility {
         }
 
         public void HandleExitButtonClick() {
-#if UNITY_EDITOR
-            UnityEditor.EditorApplication.isPlaying = false;
-#else
-            Application.Quit();
-#endif
+            StartCoroutine(nameof(ExitGameDelayed));
         }
         
         private IEnumerator LoadSceneDelayed() {
             yield return new WaitForSeconds(1.0f);
             SceneManager.LoadScene(1);
+        }
+
+        private IEnumerator ExitGameDelayed() {
+            yield return new WaitForSeconds(1.0f);
+#if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+#else
+            Application.Quit();
+#endif
         }
     }
 }
