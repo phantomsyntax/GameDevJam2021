@@ -23,7 +23,7 @@ namespace PhantomSyntax.Scripts.Checkpoints {
         {
             // Kill object when it's past the player position/offscreen
             if (gameObject.transform.position.z < -5.0f) {
-                Destroy(gameObject);
+                Destroy(gameObject, 2.0f);
             }
 
             float deltaSpeed = (Time.deltaTime * checkpointSpeed);

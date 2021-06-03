@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -28,11 +29,16 @@ namespace PhantomSyntax.Scripts.Utility {
         }
 
         public void HandleRetryButtonClick() {
-            SceneManager.LoadScene(1);
+            StartCoroutine("LoadSceneDelayed", 1);
         }
 
         public void HandleQuitButtonClick() {
-            SceneManager.LoadScene(0);
+            StartCoroutine("LoadSceneDelayed", 0);
+        }
+
+        private IEnumerator LoadSceneDelayed(object sceneIndex) {
+            yield return new WaitForSeconds(1.0f);
+            SceneManager.LoadScene((int)sceneIndex);
         }
     }
 }
