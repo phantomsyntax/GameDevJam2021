@@ -151,7 +151,7 @@ namespace PhantomSyntax.Scripts.Character {
 
             if (value.canceled) {
                 playerCharacterAnimator.SetBool("bIsJumping", false);
-                
+
                 playerAudioSource.Play();
             }
         }

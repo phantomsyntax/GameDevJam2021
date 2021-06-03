@@ -97,6 +97,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectSpeedMin: 2.5
   objectSpeedMax: 6
+  obstacleAudioSource: {fileID: 0}
+  obstacleAudioClip: {fileID: 8300000, guid: ff5f85da24bc943d1abdc5760a22bc81, type: 3}
+  _spawnObjects: {fileID: 0}
 --- !u!65 &1665083278152715121
 BoxCollider:
   m_ObjectHideFlags: 0
