@@ -19,6 +19,12 @@ namespace PhantomSyntax.Scripts.Character {
         [Header("Player Animation Settings")]
         [SerializeField] private Animator playerCharacterAnimator;
 
+        [Header("Player Audio Settings")]
+        [SerializeField] private AudioSource playerAudioSource;
+        [SerializeField] private AudioClip playerFreeSkateAudioClip;
+        [SerializeField] private AudioClip playerSidestepAudioClip;
+        [SerializeField] private AudioClip playerCrouchAudioClip;
+
         [Header("Event Settings")]
         [SerializeField] private GameObject playerFollowPoint;
         private float playerFollowPointHeight;
@@ -91,9 +97,15 @@ namespace PhantomSyntax.Scripts.Character {
             // Handle skating forward and crouching animations
             if (playerInputVector.y > 0.0f && bIsGrounded) {
                 playerCharacterAnimator.SetBool("bIsSkatingForward", true);
+                
+                playerAudioSource.clip = playerFreeSkateAudioClip;
+                playerAudioSource.Play();
             }
             else if (playerInputVector.y < 0.0f && bIsGrounded) {
                 playerCharacterAnimator.SetBool("bIsCrouching", true);
+
+                playerAudioSource.clip = playerCrouchAudioClip;
+                playerAudioSource.Play();
                 
                 // Adjust the Collider size for crouching
                 playerCharacterController.height = playerColliderHeight * 0.5f;
@@ -121,6 +133,8 @@ namespace PhantomSyntax.Scripts.Character {
             // Handle side-skating animation
             if (playerInputVector.x != 0.0f && bIsGrounded) {
                 playerCharacterAnimator.SetBool("bIsFreeSkating", true);
+
+                playerAudioSource.PlayOneShot(playerSidestepAudioClip);
             }
             else {
                 playerCharacterAnimator.SetBool("bIsFreeSkating", false);
@@ -131,10 +145,14 @@ namespace PhantomSyntax.Scripts.Character {
             if (value.started && bIsGrounded) {
                 playerCharacterAnimator.SetTrigger("Jumping");
                 playerVelocity.y += Mathf.Sqrt(playerJumpHeight * -3.0f * gravityValue);
+                
+                playerAudioSource.Stop();
             }
 
             if (value.canceled) {
                 playerCharacterAnimator.SetBool("bIsJumping", false);
+                
+                playerAudioSource.Play();
             }
         }
     }
