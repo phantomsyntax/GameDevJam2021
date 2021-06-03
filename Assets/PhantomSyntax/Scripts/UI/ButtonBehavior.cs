@@ -9,13 +9,11 @@ namespace PhantomSyntax.Scripts.UI {
         [SerializeField] private AudioClip buttonSubmitAudioClip;
 
         public void HandleSelectAudioClip() {
-            buttonAudioSource.clip = buttonSelectAudioClip;
-            buttonAudioSource.Play(); 
+            buttonAudioSource.PlayOneShot(buttonSelectAudioClip, 1.0f);
         }
     
         public void HandleSubmitAudioClip() {
-            buttonAudioSource.clip = buttonSubmitAudioClip;
-            buttonAudioSource.Play();
+            buttonAudioSource.PlayOneShot(buttonSubmitAudioClip, 1.0f);
         }
     }
 }
