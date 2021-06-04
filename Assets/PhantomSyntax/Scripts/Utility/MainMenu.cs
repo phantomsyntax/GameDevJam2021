@@ -1,9 +1,19 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 namespace PhantomSyntax.Scripts.Utility {
     public class MainMenu : MonoBehaviour {
+        [Header("Info Button Settings")]
+        [SerializeField] private Canvas infoCanvas;
+
+        private void Awake() {
+            if (!infoCanvas) {
+                infoCanvas.gameObject.SetActive(false);
+            }
+        }
 
         public void HandleStartButtonClick() {
             StartCoroutine(nameof(LoadSceneDelayed));
@@ -11,6 +21,14 @@ namespace PhantomSyntax.Scripts.Utility {
 
         public void HandleExitButtonClick() {
             StartCoroutine(nameof(ExitGameDelayed));
+        }
+
+        public void HandleInfoButtonClick() {
+            infoCanvas.gameObject.SetActive(true);
+        }
+
+        public void HandleCloseInfoButtonClick() {
+            infoCanvas.gameObject.SetActive(false);
         }
         
         private IEnumerator LoadSceneDelayed() {
