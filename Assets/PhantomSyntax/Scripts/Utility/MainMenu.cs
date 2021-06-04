@@ -6,6 +6,9 @@ namespace PhantomSyntax.Scripts.Utility {
     public class MainMenu : MonoBehaviour {
         [Header("Info Button Settings")]
         [SerializeField] private Canvas infoCanvas;
+        
+        [Header("Transition Settings")]
+        [SerializeField] private Animator crossfadeAnimator;
 
         private void Awake() {
             if (!infoCanvas) {
@@ -14,10 +17,12 @@ namespace PhantomSyntax.Scripts.Utility {
         }
 
         public void HandleStartButtonClick() {
+            crossfadeAnimator.SetTrigger("Crossfade");
             StartCoroutine(nameof(LoadSceneDelayed));
         }
 
         public void HandleExitButtonClick() {
+            crossfadeAnimator.SetTrigger("Crossfade");
             StartCoroutine(nameof(ExitGameDelayed));
         }
 
