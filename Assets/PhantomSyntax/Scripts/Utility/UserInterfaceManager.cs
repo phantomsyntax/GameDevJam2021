@@ -29,11 +29,11 @@ namespace PhantomSyntax.Scripts.Utility {
         }
 
         public void HandleRetryButtonClick() {
-            StartCoroutine("LoadSceneDelayed", 1);
+            StartCoroutine("LoadSceneDelayed", 2);
         }
 
         public void HandleQuitButtonClick() {
-            StartCoroutine("LoadSceneDelayed", 0);
+            StartCoroutine("LoadSceneDelayed", 1);
         }
 
         private IEnumerator LoadSceneDelayed(object sceneIndex) {

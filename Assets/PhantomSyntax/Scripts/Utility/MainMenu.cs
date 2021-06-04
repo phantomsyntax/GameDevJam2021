@@ -1,8 +1,6 @@
-using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 namespace PhantomSyntax.Scripts.Utility {
     public class MainMenu : MonoBehaviour {
@@ -33,7 +31,7 @@ namespace PhantomSyntax.Scripts.Utility {
         
         private IEnumerator LoadSceneDelayed() {
             yield return new WaitForSeconds(1.0f);
-            SceneManager.LoadScene(1);
+            SceneManager.LoadScene(2);
         }
 
         private IEnumerator ExitGameDelayed() {

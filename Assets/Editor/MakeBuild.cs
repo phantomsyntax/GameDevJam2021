@@ -6,7 +6,8 @@ using UnityEngine;
 
 public class MakeBuild : MonoBehaviour {
     private static readonly string[] SceneArray =
-        {"Assets/PhantomSyntax/Scenes/01_MainMenu/01_MainMenu.unity",
+        {"Assets/PhantomSyntax/Scenes/00_PhantomSyntax/00_PhantomSyntax.unity",
+            "Assets/PhantomSyntax/Scenes/01_MainMenu/01_MainMenu.unity",
             "Assets/PhantomSyntax/Scenes/03_RainBro/03_RainBro.unity"};
     
     [MenuItem("Build/Standalone Linux x64")]
